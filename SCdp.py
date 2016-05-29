@@ -1,6 +1,6 @@
 #! python2
 
-import Tkinter, os, webbrowser, ctypes, wget
+import Tkinter, os, webbrowser, ctypes, urllib
 
 def checker():
     if os.path.exists('C:\\Python27') == True:
@@ -27,8 +27,8 @@ def download(url):
 def m_search(music):
     global url
     url = 'https://soundcloud.com/search/sounds?q=%s' % (music.replace(' ', '%20'))
-    wget.download(url)
-    os.system('rename sounds sounds.txt')
+    urllib.urlretrieve(url, 'sounds.html')
+    os.system('rename sounds.html sounds.txt')
     source = open('sounds.txt')
     list = source.readlines()
     # 121 - 130
@@ -77,8 +77,11 @@ def audio_w():
 
             lb = Tkinter.Listbox(root)
             lb.configure(width= 70, font=('Helvetica', 10), background ='gray87', bd = 0)
+
             for bolb in range(9):
-                lb.insert(1, list_def[bolb])
+                lb.insert(bolb, list_def[bolb])
+               
+
             for jj in range(6):
                 la.append(jj)
                 la[jj] = Tkinter.Label(font=('Adobe Myungjo Std M', 10), text=' ',
@@ -102,9 +105,9 @@ def audio_w():
         global alu
         try:
             if alu == True:
+                del alu
                 root.destroy()
                 audio_w()
-                del alu
         except:
             s_term = entry.get()
             m_search(s_term)
