@@ -1,6 +1,6 @@
 #! python2
 
-import Tkinter, os, webbrowser, ctypes, urllib
+import Tkinter, os, webbrowser, ctypes, urllib, subprocess
 
 def checker():
     if os.path.exists('C:\\Python27') == True:
@@ -17,7 +17,9 @@ def download(url):
     try:
         ctypes.windll.user32.MessageBoxA(0, "Your music is being downloaded. Please wait...",
                                          "WARNING!", 0)
-        os.system('soundscrape %s' % (url))
+        CREATE_NO_WINDOW = 0x08000000
+        subprocess.call('soundscrape %s' % (url), creationflags=CREATE_NO_WINDOW)
+
         ctypes.windll.user32.MessageBoxA(0, "Your music has been downloaded successfully!",
                                          "WARNING!", 0)
     except:
